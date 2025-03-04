@@ -60,10 +60,10 @@ async def main():
     
     sys.stdout.write("\n") 
     sys.stdout.flush()
-
-    async with aiohttp.ClientSession() as session:
-            while True:
-                try:
+    
+    try:
+        async with aiohttp.ClientSession() as session:
+                while True:
                     data = {
                             "offset": cfg.usr_offset,
                             "position": position,
@@ -125,16 +125,16 @@ async def main():
                                 general_name = ""
                                 #break
             
-                #except KeyboardInterrupt:
-                except:
-                    print("\n[!] Player paused the game...\r")
-                    usr_abort = input("\n[?] Your choice [(c)ontinue/(e)nd this phase/(q)uit]: _")
-                    if usr_abort == "e":
-                        exit(0)
-                    if usr_abort == "q":
-                        print("\n[x] player left the game [x]")
-                        #print("[----] g4m3 0v3r.>@$q../ [----]\n")
-                        exit(0)
+    #except KeyboardInterrupt:
+    except:
+        print("\n[!] Player paused the game...\r")
+        usr_abort = input("\n[?] Your choice [(c)ontinue/(e)nd this phase/(q)uit]: _")
+        if usr_abort == "e":
+            exit(0)
+        if usr_abort == "q":
+            print("\n[x] player left the game [x]")
+            #print("[----] g4m3 0v3r.>@$q../ [----]\n")
+        exit(0)
 
     return general_name, entity_counter
 

@@ -1,4 +1,3 @@
-#import requests
 import aiohttp
 import asyncio
 import string
@@ -12,7 +11,6 @@ import argparse
 #    table_name_payloads_union_based 
 #)
 from core.payloads import *
-import time
 import re
 import core.injection as injection
 import core.config as cfg
@@ -50,20 +48,6 @@ async def binary_search(session, data):
         else:
             right = mid - 1
 
-        #if usr_mode == 'entity-count':
-        #    if await send_payload(usr_mode, usr_table, usr_column, offset, position, nums[mid], chars, session, ">"):
-        #        left = mid + 1  # char to left
-        #    elif await send_payload(usr_mode, usr_table, usr_column, offset, position, nums[mid], chars, session, "="):
-        #        return nums[mid]  # char to right
-        #    else:
-        #        right = mid - 1  # char to left
-        #else:
-        #    if await send_payload(usr_mode, usr_table, usr_column, offset, position, nums, chars[mid], session, ">"):
-        #        left = mid + 1  # char to left
-        #    elif await send_payload(usr_mode, usr_table, usr_column, offset, position, nums, chars[mid], session, "="):
-        #        return chars[mid]  # char to right
-        #    else:
-        #        right = mid - 1  # char to left
     return None
 
 async def main():
@@ -146,11 +130,10 @@ async def main():
                     print("\n[!] Player paused the game...\r")
                     usr_abort = input("\n[?] Your choice [(c)ontinue/(e)nd this phase/(q)uit]: _")
                     if usr_abort == "e":
-                        raise error
+                        exit(0)
                     if usr_abort == "q":
                         print("\n[x] player left the game [x]")
-                        #time.sleep(0.5)
-                        print("[----] g4m3 0v3r.>@$q../ [----]\n")
+                        #print("[----] g4m3 0v3r.>@$q../ [----]\n")
                         exit(0)
 
     return general_name, entity_counter

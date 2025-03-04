@@ -156,5 +156,13 @@ async def main():
     return general_name, entity_counter
 
 if __name__ == "__main__":
-    asyncio.run(main())
-
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        exit(0)
+    except SystemExit:
+        exit(0)
+    finally:
+        exit(0)
+else:
+    exit(0)

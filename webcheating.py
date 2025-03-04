@@ -141,8 +141,8 @@ async def main():
                                 general_name = ""
                                 #break
             
-                except KeyboardInterrupt:
-                #except:
+                #except KeyboardInterrupt:
+                except:
                     print("\n[!] Player paused the game...\r")
                     usr_abort = input("\n[?] Your choice [(c)ontinue/(e)nd this phase/(q)uit]: _")
                     if usr_abort == "e":

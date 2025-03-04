@@ -143,7 +143,8 @@ if __name__ == "__main__":
         asyncio.run(main())
     except KeyboardInterrupt:
         exit(0)
-    except SystemExit:
+    except Exception as e:
+        print("error: ", e)
         exit(0)
     finally:
         exit(0)

